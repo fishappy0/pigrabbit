@@ -6,8 +6,7 @@ A rust wrapper for porkbun's api
 
 Adding a record to the domain and view all the records:
 
-```
-
+```rust
 let keys_file = std::fs::read_to_string("keys.json").expect("File not found!");
 let keys = serde_json::from_str(&keys_file).unwrap();
 let mut client = pigrabbit::PRClient::new(keys);
