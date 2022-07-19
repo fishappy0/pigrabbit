@@ -25,12 +25,12 @@ impl PRClient {
         Ok(res)
     }
 
-    /// The add_record function adds a DNS Record.
+    /// The add_record function adds a DNS Record and return an id as an i64.
     pub async fn add_record(
         &mut self,
         domain: &str,
         record_struct: &Record,
-    ) -> Result<(), PigRabbitError> {
+    ) -> Result<i64, PigRabbitError> {
         let url = format!("{API_URL}dns/create/{domain}");
         let body = ComplicatedBody {
             secretapikey: &self.key.secretapikey,
@@ -42,7 +42,7 @@ impl PRClient {
         };
         let res = Self::send_request(&mut self.client, &url, &body).await?;
         match res["status"].as_str().unwrap() {
-            "SUCCESS" => Ok(()),
+            "SUCCESS" => Ok(res["id"].as_i64().unwrap()),
             _ => Err(PigRabbitError::ResponseError(res)),
         }
     }
