@@ -38,7 +38,7 @@ impl PRClient {
             name: &record_struct.name,
             dtype: &record_struct.dtype,
             content: &record_struct.content,
-            ttl: record_struct.ttl,
+            ttl: &record_struct.ttl,
         };
         let res = Self::send_request(&mut self.client, &url, &body).await?;
         match res["status"].as_str().unwrap() {
@@ -65,7 +65,7 @@ impl PRClient {
             name: &record_struct.name,
             dtype: &record_struct.dtype,
             content: &record_struct.content,
-            ttl: record_struct.ttl,
+            ttl: &record_struct.ttl,
         };
         let res = Self::send_request(&mut self.client, &url, &body).await?;
         match res["status"].as_str().unwrap() {
@@ -87,7 +87,7 @@ impl PRClient {
             secretapikey: &self.key.secretapikey,
             apikey: &self.key.apikey,
             content: &record_struct.content,
-            ttl: record_struct.ttl,
+            ttl: &record_struct.ttl,
         };
         let res = Self::send_request(&mut self.client, &url, &body).await?;
         match res["status"].as_str().unwrap() {
@@ -178,8 +178,7 @@ impl PRClient {
         domain: &str,
     ) -> Result<Certificate, PigRabbitError> {
         let url = format!("{API_URL}ssl/retrieve/{domain}");
-        let body = serde_json::to_string(&self.key).unwrap();
-        let res = Self::send_request(&mut self.client, &url, &body).await?;
+        let res = Self::send_request(&mut self.client, &url, &self.key).await?;
 
         match res["status"].as_str().unwrap() {
             "SUCCESS" => Ok(serde_json::from_value(res).unwrap()),
