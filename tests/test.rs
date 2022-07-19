@@ -1,6 +1,6 @@
 static CONFIG: &'static str = include_str!("../config.json");
 // use prclient::prclient;
-use pigrabbit::PRClient;
+use pigrabbit::{types::Record, PRClient};
 use serde_json;
 
 fn init_prclient() -> PRClient {
@@ -39,14 +39,63 @@ fn retreive_by_domain_with_id() {
 }
 
 #[test]
-fn add_record() {
+fn add_and_remove_record() {
     let mut prclient = init_prclient();
+    let record = Record {
+        name: "test_record".to_owned(),
+        dtype: "TXT".to_owned(),
+        content: "test!".to_owned(),
+        ttl: "300".to_owned(),
+    };
     block_on(async {
-        prclient
-            .retreive_by_domain_with_id(
+        let id = prclient
+            .add_record(
                 "arvinderd.com",
-                "", // "", // none,
+                &record, // "", // none,
             )
+            .await
+            .unwrap();
+
+        tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+        prclient
+            .del_by_id("arvinderd.com", &id.to_string())
+            .await
+            .unwrap();
+    });
+}
+
+#[test]
+fn add_edit_and_remove_record() {
+    let mut prclient = init_prclient();
+    let record = Record {
+        name: "test_record_for_edit".to_owned(),
+        dtype: "TXT".to_owned(),
+        content: "test!".to_owned(),
+        ttl: "300".to_owned(),
+    };
+    let edited_record = Record {
+        name: "edited_test_record".to_owned(),
+        dtype: "TXT".to_owned(),
+        content: "edited test!".to_owned(),
+        ttl: "420".to_owned(),
+    };
+    block_on(async {
+        let id = prclient
+            .add_record(
+                "arvinderd.com",
+                &record, // "", // none,
+            )
+            .await
+            .unwrap();
+
+        tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+        prclient
+            .edit_by_domain_and_id("arvinderd.com", &id.to_string(), &edited_record)
+            .await
+            .unwrap();
+        tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+        prclient
+            .del_by_id("arvinderd.com", &id.to_string())
             .await
             .unwrap();
     });
