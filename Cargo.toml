@@ -6,7 +6,6 @@ version = "0.1.0"
 edition = "2021"
 
 [lib]
-doctest = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -18,5 +17,4 @@ thiserror = "1.0.31"
 
 [dev-dependencies]
 tokio = { version = "1.20.0", features = ["full"] }
-futures = {version= "0.3.21", features= ["executor"]}
 
