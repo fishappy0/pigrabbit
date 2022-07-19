@@ -15,10 +15,12 @@ let record = pigrabbit::types::Record{
     name: "internal".to_owned(),
     dtype: "A".to_owned(),
     content: "1.1.1.1".to_owned(),
-    ttl: 300
+    ttl: "300".to_owned()
 };
 
 client.add_record("Example.com",&record).await.unwrap();
+//Wait for the remote to catch up
+tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 let records = client.retreive_by_domain_with_id("Example.com", "").await.unwrap();
 println!("{:?}", records);
 
