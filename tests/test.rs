@@ -1,13 +1,11 @@
-static config: &'static str = include_str!("../config.json");
+static CONFIG: &'static str = include_str!("../config.json");
 // use prclient::prclient;
-use pigrabbit::{types::Keys, *};
+use pigrabbit::PRClient;
 use serde_json;
-use std::fs;
-use types::*;
 
 fn init_prclient() -> PRClient {
-    let key_struct = serde_json::from_str(&config).unwrap();
-    let mut prclient = pigrabbit::PRClient::new(key_struct);
+    let key_struct = serde_json::from_str(&CONFIG).unwrap();
+    let prclient = pigrabbit::PRClient::new(key_struct);
     prclient
 }
 
