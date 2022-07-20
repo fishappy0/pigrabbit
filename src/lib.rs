@@ -13,6 +13,8 @@
 /// let mut client = pigrabbit::PRClient::new(keys);
 ///
 /// client.retreive_by_domain_with_id("example.com", "1234567").await.unwrap();
+/// //Wait for the remote to catch up
+/// tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 /// client.del_by_id("example.com","1234567").await.unwrap();
 ///
 /// ```
