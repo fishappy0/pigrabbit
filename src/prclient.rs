@@ -25,6 +25,16 @@ impl PRClient {
         Ok(res)
     }
 
+    /// The `ping_test` pings the server to check if the server is online as well as testing credentials.
+    pub async fn ping_test(&mut self) -> Result<(), PigRabbitError> {
+        let url = format!("{API_URL}ping");
+        let res = Self::send_request(&mut self.client, &url, &self.key).await?;
+        match res["status"].as_str().unwrap() {
+            "SUCCESS" => Ok(()),
+            _ => Err(PigRabbitError::ResponseError(res)),
+        }
+    }
+
     /// The add_record function adds a DNS Record and return an id as an i64.
     pub async fn add_record(
         &mut self,
