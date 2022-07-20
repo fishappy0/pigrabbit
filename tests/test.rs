@@ -14,6 +14,13 @@ fn block_on<T: std::future::Future>(s: T) -> T::Output {
     rt.block_on(s)
 }
 #[test]
+fn ping_test() {
+    let mut prclient = init_prclient();
+    block_on(async {
+        prclient.ping_test().await.unwrap();
+    });
+}
+#[test]
 fn retreive_ssl_certs() {
     let mut prclient = init_prclient();
     block_on(async {
