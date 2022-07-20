@@ -1,6 +1,9 @@
 # PigRabbit
 
-A rust wrapper for porkbun's api
+[![github](https://shields.io/badge/github-green?logo=github&color=informational&style=for-the-badge)](https://github.com/fishappy0/pigrabbit)
+[![docs](https://shields.io/badge/Docs.rs-green?logo=rust&color=green&style=for-the-badge)](https://docs.rs/pigrabbit/latest/pigrabbit/)
+[![cratesio](https://shields.io/badge/Crates.io-green?logo=rust&color=orange&style=for-the-badge)](https://crates.io/crates/pigrabbit)
+</br><p style="font-size:23px"> A rust wrapper for porkbun's api<p>
 
 # Example
 

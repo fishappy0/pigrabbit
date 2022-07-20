@@ -1,3 +1,7 @@
+#![doc(
+    html_logo_url = "https://github.com/fishappy0/pigrabbit/raw/master/assets/pigrabbit-logo.png",
+    html_favicon_url = "https://github.com/fishappy0/pigrabbit/raw/master/assets/pigrabbit-logo.png"
+)]
 #![doc = include_str!("../README.md")]
 /// A PRClient stands for PigRabbitClient is
 /// a web client with authentication keys that is required by PorkBun API.
