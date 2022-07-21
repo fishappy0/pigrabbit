@@ -90,7 +90,7 @@ impl PRClient {
         domain: &str,
         subdomain: &str,
         dtype: &str,
-        record_struct: Record,
+        record_struct: &Record,
     ) -> Result<(), PigRabbitError> {
         let url = format!("{API_URL}dns/editByNameType/{domain}/{dtype}/{subdomain}");
         let body = SimpleBody {
