@@ -89,10 +89,10 @@ impl PRClient {
         &mut self,
         domain: &str,
         subdomain: &str,
-        dtype: &str,
         record_struct: &Record,
     ) -> Result<(), PigRabbitError> {
-        let url = format!("{API_URL}dns/editByNameType/{domain}/{dtype}/{subdomain}");
+        let domain_type = &record_struct.dtype;
+        let url = format!("{API_URL}dns/editByNameType/{domain}/{domain_type}/{subdomain}");
         let body = SimpleBody {
             secretapikey: &self.key.secretapikey,
             apikey: &self.key.apikey,
